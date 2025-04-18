@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Image Dehaze Pro - Clarity in Every Pixel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-image"></i> Satellite Image Dehazing</h1>
+            <p class="tagline">Unlock the True Clarity of Satellite Images</p>
+            <form method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="file-upload-wrapper">
+                    <label for="file-upload" class="file-upload-button">
+                        <i class="fas fa-upload"></i> Upload Image
+                        <input id="file-upload" type="file" name="file" accept="image/*" required>
+                    </label>
+                    <span id="file-name" class="file-name-placeholder">No file chosen</span>
+                </div>
+                <button type="submit" class="process-button">
+                    <i class="fas fa-magic"></i> Dehaze It
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            {% if original_img and dehazed_img %}
+            <section class="results-section">
+                <h2><i class="fas fa-sliders-h"></i> Dehazing Results</h2>
+                <div class="image-comparison">
+                    <div class="image-container original-image">
+                        <h3><i class="fas fa-camera"></i> Original</h3>
+                        <div class="image-frame">
+                            <img src="data:image/jpeg;base64,{{ original_img }}" alt="Original Image">
+                        </div>
+                    </div>
+                    <div class="image-container dehazed-image">
+                        <h3><i class="fas fa-sun"></i> Dehazed</h3>
+                        <div class="image-frame">
+                            <img src="data:image/jpeg;base64,{{ dehazed_img }}" alt="Dehazed Image">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+
+            {% if error %}
+            <section class="error-section">
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> Error: {{ error }}
+                </div>
+            </section>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Satellite Image Dehaze Pro | Crafted with Python & Flask</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function() {
+            var fileName = this.value.split('\\').pop();
+            document.getElementById('file-name').textContent = fileName || 'No file chosen';
+        });
+    </script>
+</body>
+</html>

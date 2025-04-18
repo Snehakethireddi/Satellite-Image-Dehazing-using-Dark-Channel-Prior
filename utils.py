@@ -10,8 +10,10 @@ def get_dark_channel(image, window_size):
         for j in range(image.shape[1]):
             top = max(0, i - window_size // 2)
             left = max(0, j - window_size // 2)
-            bottom = min(image.shape[0], i + window_size // 2)
-            right = min(image.shape[1], j + window_size // 2)
+            #bottom = min(image.shape[0], i + window_size // 2)
+            #right = min(image.shape[1], j + window_size // 2)
+            bottom = max(top + 1, min(image.shape[0], i + window_size // 2))
+            right = max(left + 1, min(image.shape[1], j + window_size // 2))
             dark_channel[i, j] = np.min(gray[top:bottom, left:right])
     return dark_channel
 
